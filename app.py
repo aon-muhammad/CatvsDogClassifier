@@ -5,9 +5,9 @@ from PIL import Image
 import streamlit as st
 import utils
 
-# Set Page Config with clean wide layout (Sidebar Collapsed / No Sidebar needed)
+# Set Page Config with clean layout
 st.set_page_config(
-    page_title="PawDetective - Anthropomorphic Pet Classifier",
+    page_title="Cat vs Dog Classifier",
     page_icon="🐾",
     layout="wide",
     initial_sidebar_state="collapsed"
@@ -27,7 +27,7 @@ st.markdown("""
         color: #2C3E50;
     }
 
-    /* Hide Sidebar completely if desired */
+    /* Hide Sidebar */
     [data-testid="stSidebar"] {
         display: none;
     }
@@ -58,7 +58,7 @@ st.markdown("""
         margin-top: 6px;
     }
 
-    /* Inline Control Deck Bar */
+    /* Control Deck Bar */
     .control-card {
         background: #FFFFFF;
         border-radius: 22px;
@@ -152,27 +152,27 @@ except Exception as e:
     st.error(f"⚠️ Error loading model: {e}")
     model_loaded = False
 
-# Header Banner
+# Clean Header Banner without branded UI name
 st.markdown("""
 <div class="hero-container">
     <div style="font-size: 3.5rem; margin-bottom: 5px;">🐱 🐾 🐶</div>
-    <h1 class="hero-title">Paw Detective AI</h1>
-    <div class="hero-subtitle">Anthropomorphic Pet Classifier • Funny AI Pet Analysis</div>
+    <h1 class="hero-title">Cat vs Dog Classifier</h1>
+    <div class="hero-subtitle">Anthropomorphic AI Classification & Pet Humor</div>
 </div>
 """, unsafe_allow_html=True)
 
-# Top Control Deck (Inline controls right on the main page!)
-with st.expander("🎛️ Paw Control Deck (Customize Mascot & Display Settings)", expanded=False):
+# Top Control Deck
+with st.expander("🎛️ Control Deck (Settings & Display Options)", expanded=False):
     col_c1, col_c2, col_c3 = st.columns(3)
     
     with col_c1:
         confidence_threshold = st.slider(
-            "🎯 Mascot Threshold (%)",
+            "🎯 Confidence Threshold (%)",
             min_value=50,
             max_value=95,
             value=60,
             step=5,
-            help="Low confidence triggers Professor Paw's puzzling warning!"
+            help="Low confidence triggers the puzzled detective warning!"
         )
     
     with col_c2:
@@ -228,7 +228,7 @@ if selected_image is not None and model_loaded:
         original_img, resized_img, img_batch = utils.preprocess_image(selected_image)
         predicted_class, confidence, raw_score, cat_prob, dog_prob = utils.predict_pet(model, img_batch)
         
-        # Anthropomorphic Mascot metadata with funny quote
+        # Mascot metadata with funny quote
         mascot = utils.get_anthropomorphic_mascot(
             predicted_class, 
             confidence, 
@@ -250,7 +250,7 @@ if selected_image is not None and model_loaded:
                 st.image(resized_img, width=200)
 
         with col_results:
-            st.markdown("#### 🕵️ Detective Mascot Report")
+            st.markdown("#### 🕵️ Character Report")
             
             # Anthropomorphic Mascot Funny Reply Card
             st.markdown(f"""
